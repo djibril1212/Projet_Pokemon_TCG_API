@@ -69,6 +69,7 @@ public class Pokemon {
 		this.rarete = rarete;
 	}
 
+
 	public String getUuid() {
 		return uuid;
 	}
