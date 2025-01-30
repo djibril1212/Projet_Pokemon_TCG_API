@@ -19,8 +19,12 @@ public class DrawController {
     }
 
     @GetMapping("/tirer/{dresseurId}")
-    public ResponseEntity<List<Carte>> tirerCartes(@PathVariable String dresseurId) {
-        List<Carte> cartes = drawService.tirerCartes(dresseurId);
-        return new ResponseEntity<>(cartes, HttpStatus.OK);
+    public ResponseEntity<?> tirerCartes(@PathVariable String dresseurId) {
+        try {
+            List<Carte> cartes = drawService.tirerCartes(dresseurId);
+            return new ResponseEntity<>(cartes, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 }

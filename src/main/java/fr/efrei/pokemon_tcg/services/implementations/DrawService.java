@@ -4,11 +4,12 @@ import fr.efrei.pokemon_tcg.models.Carte;
 import fr.efrei.pokemon_tcg.models.Dresseur;
 import fr.efrei.pokemon_tcg.models.Pokemon;
 import fr.efrei.pokemon_tcg.repositories.CarteRepository;
-import fr.efrei.pokemon_tcg.repositories.PokemonRepository;
 import fr.efrei.pokemon_tcg.repositories.DresseurRepository;
+import fr.efrei.pokemon_tcg.repositories.PokemonRepository;
 import fr.efrei.pokemon_tcg.constants.TypePokemon;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,9 +32,14 @@ public class DrawService {
     public List<Carte> tirerCartes(String dresseurId) {
         Optional<Dresseur> dresseurOpt = dresseurRepository.findById(dresseurId);
         if (dresseurOpt.isEmpty()) {
-            throw new RuntimeException("Dresseur introuvable !");
+            throw new RuntimeException("Dresseur introuvable !👻");
         }
         Dresseur dresseur = dresseurOpt.get();
+
+        // Vérifier si le dresseur a déjà tiré aujourd'hui
+        if (dresseur.getDernierTirage() != null && dresseur.getDernierTirage().isEqual(LocalDate.now())) {
+            throw new RuntimeException("Tu as déjà tiré tes cartes aujourd'hui. Reviens demain !😝");
+        }
 
         List<Carte> cartesTirees = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
@@ -42,6 +48,11 @@ public class DrawService {
             carteRepository.save(carte);
             cartesTirees.add(carte);
         }
+
+        // Mettre à jour la date du dernier tirage
+        dresseur.setDernierTirage(LocalDate.now());
+        dresseurRepository.save(dresseur);
+
         return cartesTirees;
     }
 
