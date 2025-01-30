@@ -8,18 +8,27 @@ public class Pokemon {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	private String uuid;
+	private String uuid; // Identifiant unique pour chaque Pokémon
 
-	private String nom;
-	private Integer niveau;
+	private String nom; // Nom du Pokémon
+	private Integer niveau; // Niveau du Pokémon
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.STRING) // Enum pour le type du Pokémon
 	private TypePokemon type;
 
-	private String attaque1;
-	private String attaque2;
+	private String attaque1; // Première attaque du Pokémon
+	private String attaque2; // Deuxième attaque du Pokémon
 
-	private int rarete; // 1 à 5 étoiles
+	private int rarete; // Niveau de rareté du Pokémon (1 à 5)
+
+	// Getters et Setters pour chaque champ
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
 
 	public String getNom() {
 		return nom;
@@ -67,9 +76,5 @@ public class Pokemon {
 
 	public void setRarete(int rarete) {
 		this.rarete = rarete;
-	}
-
-	public String getUuid() {
-		return uuid;
 	}
 }
