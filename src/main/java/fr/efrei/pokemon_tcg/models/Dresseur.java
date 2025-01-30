@@ -2,6 +2,9 @@ package fr.efrei.pokemon_tcg.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Dresseur {
@@ -12,10 +15,14 @@ public class Dresseur {
 
 	private String nom;
 	private int age;
-
 	private LocalDate dernierTirage; // Date du dernier tirage
+	private LocalDateTime deletedAt; // Date de suppression
+
+	@OneToMany
+	private List<Pokemon> pokemonList; // Liste des Pokémon possédés
 
 	public Dresseur() {
+		this.pokemonList = new ArrayList<>(); // Initialisation de la liste pour éviter les erreurs
 	}
 
 	public String getUuid() {
@@ -44,5 +51,24 @@ public class Dresseur {
 
 	public void setDernierTirage(LocalDate dernierTirage) {
 		this.dernierTirage = dernierTirage;
+	}
+
+	public LocalDateTime getDeletedAt() {
+		return deletedAt;
+	}
+
+	public void setDeletedAt(LocalDateTime deletedAt) {
+		this.deletedAt = deletedAt;
+	}
+
+	public List<Pokemon> getPokemonList() {
+		return pokemonList;
+	}
+
+	public void setPokemonList(List<Pokemon> pokemonList) {
+		this.pokemonList = pokemonList;
+	}
+
+	public void setPrenom(String prenom) {
 	}
 }

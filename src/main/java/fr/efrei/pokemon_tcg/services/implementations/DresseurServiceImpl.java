@@ -9,7 +9,9 @@ import fr.efrei.pokemon_tcg.services.IDresseurService;
 import fr.efrei.pokemon_tcg.services.IPokemonService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,7 +19,8 @@ public class DresseurServiceImpl implements IDresseurService {
 
 	private final DresseurRepository repository;
 	private final IPokemonService pokemonService;
-	public DresseurServiceImpl(DresseurRepository repository, PokemonServiceImpl pokemonService) {
+
+	public DresseurServiceImpl(DresseurRepository repository, IPokemonService pokemonService) {
 		this.repository = repository;
 		this.pokemonService = pokemonService;
 	}
@@ -29,12 +32,19 @@ public class DresseurServiceImpl implements IDresseurService {
 
 	@Override
 	public Dresseur findById(String uuid) {
-		return repository.findById(uuid).orElse(null);
+		return repository.findById(uuid)
+				.orElseThrow(() -> new RuntimeException("Dresseur introuvable avec l'ID : " + uuid));
 	}
 
 	public void capturerPokemon(String uuid, CapturePokemon capturePokemon) {
 		Dresseur dresseur = findById(uuid);
 		Pokemon pokemon = pokemonService.findById(capturePokemon.getUuid());
+
+		// Vérifier si la liste des Pokémon est bien initialisée
+		if (dresseur.getPokemonList() == null) {
+			dresseur.setPokemonList(new ArrayList<>());
+		}
+
 		dresseur.getPokemonList().add(pokemon);
 		repository.save(dresseur);
 	}
@@ -44,6 +54,7 @@ public class DresseurServiceImpl implements IDresseurService {
 		Dresseur dresseur = new Dresseur();
 		dresseur.setNom(dresseurDTO.getNom());
 		dresseur.setPrenom(dresseurDTO.getPrenom());
+		dresseur.setDernierTirage(null); // Aucun tirage initialement
 		dresseur.setDeletedAt(null);
 		repository.save(dresseur);
 	}
@@ -59,5 +70,12 @@ public class DresseurServiceImpl implements IDresseurService {
 		dresseur.setDeletedAt(LocalDateTime.now());
 		repository.save(dresseur);
 		return true;
+	}
+
+	//Méthode pour gérer le dernier tirage
+	public void mettreAJourDernierTirage(String dresseurId) {
+		Dresseur dresseur = findById(dresseurId);
+		dresseur.setDernierTirage(LocalDate.now());
+		repository.save(dresseur);
 	}
 }
