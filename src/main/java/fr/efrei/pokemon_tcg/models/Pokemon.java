@@ -57,7 +57,7 @@ public class Pokemon {
 		return attaque2;
 	}
 
-	public void setAttaque2(String attaque2) {
+	public void setAttaque2(String attaque2)  {
 		this.attaque2 = attaque2;
 	}
 
