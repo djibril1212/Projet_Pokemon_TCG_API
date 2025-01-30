@@ -13,6 +13,7 @@ public class Pokemon {
 	private String nom;
 	private Integer niveau;
 
+
 	@Enumerated(EnumType.STRING)
 	private TypePokemon type;
 
