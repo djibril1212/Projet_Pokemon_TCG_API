@@ -40,7 +40,7 @@ public class DresseurServiceImpl implements IDresseurService {
 		Dresseur dresseur = findById(uuid);
 		Pokemon pokemon = pokemonService.findById(capturePokemon.getUuid());
 
-		// Vérifier si la liste des Pokémon est bien initialisée
+
 		if (dresseur.getPokemonList() == null) {
 			dresseur.setPokemonList(new ArrayList<>());
 		}
@@ -54,7 +54,7 @@ public class DresseurServiceImpl implements IDresseurService {
 		Dresseur dresseur = new Dresseur();
 		dresseur.setNom(dresseurDTO.getNom());
 		dresseur.setPrenom(dresseurDTO.getPrenom());
-		dresseur.setDernierTirage(null); // Aucun tirage initialement
+		dresseur.setDernierTirage(null);
 		dresseur.setDeletedAt(null);
 		repository.save(dresseur);
 	}
@@ -72,7 +72,6 @@ public class DresseurServiceImpl implements IDresseurService {
 		return true;
 	}
 
-	//Méthode pour gérer le dernier tirage
 	public void mettreAJourDernierTirage(String dresseurId) {
 		Dresseur dresseur = findById(dresseurId);
 		dresseur.setDernierTirage(LocalDate.now());

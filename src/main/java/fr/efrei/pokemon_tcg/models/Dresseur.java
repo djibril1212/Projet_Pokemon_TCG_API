@@ -14,15 +14,15 @@ public class Dresseur {
 	private String uuid;
 
 	private String nom;
-	private int age;
-	private LocalDate dernierTirage; // Date du dernier tirage
-	private LocalDateTime deletedAt; // Date de suppression
+	private Integer age;
+	private LocalDate dernierTirage;
+	private LocalDateTime deletedAt;
 
 	@OneToMany
-	private List<Pokemon> pokemonList; // Liste des Pokémon possédés
+	private List<Pokemon> pokemonList;
 
 	public Dresseur() {
-		this.pokemonList = new ArrayList<>(); // Initialisation de la liste pour éviter les erreurs
+		this.pokemonList = new ArrayList<>();
 	}
 
 	public String getUuid() {
@@ -37,7 +37,7 @@ public class Dresseur {
 		this.nom = nom;
 	}
 
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
 
