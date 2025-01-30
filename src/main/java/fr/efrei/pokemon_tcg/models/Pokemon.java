@@ -61,6 +61,7 @@ public class Pokemon {
 		this.attaque2 = attaque2;
 	}
 
+
 	public int getRarete() {
 		return rarete;
 	}
