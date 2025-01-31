@@ -18,11 +18,14 @@ public class Dresseur {
 	private LocalDate dernierTirage;
 	private LocalDateTime deletedAt;
 
+	private Integer niveau;
+
 	@OneToMany
 	private List<Pokemon> pokemonList;
 
 	public Dresseur() {
 		this.pokemonList = new ArrayList<>();
+		this.niveau = 1;
 	}
 
 	public String getUuid() {
@@ -45,6 +48,13 @@ public class Dresseur {
 		this.age = age;
 	}
 
+	public Integer getNiveau() {
+		return niveau;
+	}
+
+	public void setNiveau(Integer niveau) {
+		this.niveau = niveau;
+	}
 	public LocalDate getDernierTirage() {
 		return dernierTirage;
 	}
