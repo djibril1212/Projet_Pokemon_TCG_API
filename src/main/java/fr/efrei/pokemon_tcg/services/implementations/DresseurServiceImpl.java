@@ -77,4 +77,5 @@ public class DresseurServiceImpl implements IDresseurService {
 		dresseur.setDernierTirage(LocalDate.now());
 		repository.save(dresseur);
 	}
+
 }

@@ -26,37 +26,35 @@ public class EchangeService {
     }
 
     public Echange echangerCartes(String dresseur1Id, String dresseur2Id, String carte1Id, String carte2Id) {
-        // Récupérer les dresseurs
         Dresseur dresseur1 = dresseurRepository.findById(dresseur1Id)
                 .orElseThrow(() -> new RuntimeException("Dresseur 1 introuvable"));
         Dresseur dresseur2 = dresseurRepository.findById(dresseur2Id)
                 .orElseThrow(() -> new RuntimeException("Dresseur 2 introuvable"));
 
-        // Vérifier si un échange a déjà eu lieu aujourd'hui
         LocalDateTime aujourdHui = LocalDateTime.now().minusDays(1);
         if (!echangeRepository.findByDresseur1AndDateEchangeAfter(dresseur1, aujourdHui).isEmpty() ||
                 !echangeRepository.findByDresseur2AndDateEchangeAfter(dresseur2, aujourdHui).isEmpty()) {
             throw new RuntimeException("Un dresseur a déjà fait un échange aujourd'hui !");
         }
 
-        // Récupérer les cartes
+
         Carte carte1 = carteRepository.findById(carte1Id)
                 .orElseThrow(() -> new RuntimeException("Carte 1 introuvable"));
         Carte carte2 = carteRepository.findById(carte2Id)
                 .orElseThrow(() -> new RuntimeException("Carte 2 introuvable"));
 
-        // Vérifier que les cartes appartiennent aux bons dresseurs
+
         if (!carte1.getDresseur().equals(dresseur1) || !carte2.getDresseur().equals(dresseur2)) {
             throw new RuntimeException("Une carte n'appartient pas au bon dresseur !");
         }
 
-        // Effectuer l'échange
+
         carte1.setDresseur(dresseur2);
         carte2.setDresseur(dresseur1);
         carteRepository.save(carte1);
         carteRepository.save(carte2);
 
-        // Enregistrer l'échange
+
         Echange echange = new Echange();
         echange.setDresseur1(dresseur1);
         echange.setDresseur2(dresseur2);

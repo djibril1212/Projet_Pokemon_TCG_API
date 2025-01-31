@@ -3,15 +3,24 @@ import fr.efrei.pokemon_tcg.services.CombatService;
 import org.springframework.stereotype.Service;
 import fr.efrei.pokemon_tcg.models.Dresseur;
 
+import fr.efrei.pokemon_tcg.repositories.CombatRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
+
 
 @Service
 public class CombatServiceImpl implements CombatService {
 
+    @Autowired
+    private CombatRepository combatRepository;
+
     @Override
     public String initierCombat(String dresseur1Uuid, String dresseur2Uuid) {
+
         if (dresseur1Uuid == null || dresseur2Uuid == null) {
             throw new IllegalArgumentException("Les UUID des dresseurs ne peuvent pas être null.");
         }
+
 
         // Logique pour commencer le combat
         return "Combat entre le dresseur " + dresseur1Uuid + " et le dresseur " + dresseur2Uuid + " initié.";
