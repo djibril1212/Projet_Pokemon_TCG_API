@@ -12,21 +12,21 @@ public class Echange {
 
     @ManyToOne
     @JoinColumn(name = "dresseur1_id", nullable = false)
-    private Dresseur dresseur1; // Premier dresseur participant à l'échange
+    private Dresseur dresseur1;
 
     @ManyToOne
     @JoinColumn(name = "dresseur2_id", nullable = false)
-    private Dresseur dresseur2; // Deuxième dresseur participant
+    private Dresseur dresseur2;
 
     @ManyToOne
     @JoinColumn(name = "carte1_id", nullable = false)
-    private Carte carte1; // Carte échangée par le premier dresseur
+    private Carte carte1;
 
     @ManyToOne
     @JoinColumn(name = "carte2_id", nullable = false)
-    private Carte carte2; // Carte échangée par le deuxième dresseur
+    private Carte carte2;
 
-    private LocalDateTime dateEchange; // Date de l'échange
+    private LocalDateTime dateEchange;
 
     public Echange() {
         this.dateEchange = LocalDateTime.now();
