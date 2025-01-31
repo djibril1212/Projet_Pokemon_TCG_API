@@ -1,34 +1,30 @@
 package fr.efrei.pokemon_tcg.controllers;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-import fr.efrei.pokemon_tcg.services.CombatService;
 
+import fr.efrei.pokemon_tcg.models.Combat;
+import fr.efrei.pokemon_tcg.services.implementations.CombatService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/combat")
+@RequestMapping("/api/combat")
 public class CombatController {
 
     private final CombatService combatService;
 
-    @Autowired
     public CombatController(CombatService combatService) {
         this.combatService = combatService;
     }
 
     @PostMapping
-    public ResponseEntity<String> lancerCombat(
-            @RequestParam String dresseur1Uuid,
-            @RequestParam String dresseur2Uuid) {
+    public ResponseEntity<?> lancerCombat(
+            @RequestParam String dresseur1Id,
+            @RequestParam String dresseur2Id) {
         try {
-            String resultat = combatService.initierCombat(dresseur1Uuid, dresseur2Uuid);
-            return ResponseEntity.ok(resultat);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            Combat combat = combatService.lancerCombat(dresseur1Id, dresseur2Id);
+            return new ResponseEntity<>(combat, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Erreur lors du combat : " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }
