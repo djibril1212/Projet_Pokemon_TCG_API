@@ -112,5 +112,9 @@ POST http://localhost:8080/api/combat
 
 ## 🚀 Auteur
 
-Projet développé par **Djibril & loane **. 🌟
 
+
+Projet développé par [contributors](https://github.com/djibril1212/Projet_Pokemon_TCG_API/graphs/contributors)
+
+- Djibril 
+- Loane 
